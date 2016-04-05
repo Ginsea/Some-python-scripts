@@ -2,7 +2,7 @@
 
 '''
 @Description This script can be used to get protein coverage based on blast+ outfile (outfmt 6)
-protein coverage is is the highest percentage of protein aligned to the best of homologs
+protein coverage is the highest percentage of protein aligned to the best of homologs
 @Author This script is developed by Ginsea Chen of CATAS (ginseachen@hotmail.com)
 @Usage: python calc_prot_coverage.py --blast blast.outfmt6 --fasta target.fasta --out out.tab
 '''
