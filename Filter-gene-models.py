@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/usr/bin/env python
 
 '''
 @Description This script can be used to filter gene models produced by PASA. The threshold is :
