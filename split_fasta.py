@@ -32,6 +32,7 @@ def main():
     num = int(agrse.num)
     nf = i / num
     x = 1
+    
     if i%num == 0:
         while x <= nf:
             out = open("split/%s_%d.fa"%(agrse.fasta.split(".")[0],x),"w")
