@@ -18,7 +18,7 @@ def parse_args():
 def create_dir():
     try:
         os.stat("split")
-    except:
+    except OSError:
         os.mkdir("split")
 
 def main():
