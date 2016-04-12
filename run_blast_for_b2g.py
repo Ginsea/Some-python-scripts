@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 '''
 @Description This script can be used to run blast against nr database for GO annotation analysis
-@The corresponding parameters of blast waere obtained from web of blast2go
+@The corresponding parameters of blast were obtained from web of blast2go
 @Author This script was developed by Ginsea Chen (ginseachen@hotmail.com) in CATAS
 @Usage python run_blast_for_b2g.py --query query.fa --db path to nr --num_threads [NUM] --out query.xml --dbtype prot
 '''
