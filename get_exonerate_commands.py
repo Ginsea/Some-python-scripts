@@ -19,7 +19,7 @@ def main():
     argse = parse_args()
     out = open(argse.out,"w")
     for i in range(1,(int(argse.num) + 1)):
-        out.write("exonerate --model protein2genome -q %s -t %s --showtargetgff T --showalignment F --showvulgar F --showcigar F --ryo F -- targetchunkid %d --targetchunktotal %d > out%d.exonerate"%(argse.query,argse.target,i,int(argse.num),i))
+        out.write("exonerate --model protein2genome -q %s -t %s --showtargetgff T --showalignment F --showvulgar F --showcigar F --ryo F --targetchunkid %d --targetchunktotal %d > %s_%d.exonerate\n"%(argse.query,argse.target,i,int(argse.num),argse.query.split(".")[0],i))
 
 if __name__ == "__main__":
     main()
