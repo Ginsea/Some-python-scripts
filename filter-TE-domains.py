@@ -7,6 +7,8 @@
 '''
 import argparse
 from Bio import SeqIO
+import sys
+import os, os.path
 
 def args_parse():
     parser = argparse.ArgumentParser(usage="%(prog)s[options]")
@@ -47,6 +49,11 @@ def get_pfam(pfam):
 
 def main():
     args = args_parse()
+    
+    if args.fasta == None or args.infile == None or args.TE == None:
+        os.system("python %s -h"%sys.argv[0])
+        exit(0)
+    
     out1 = open("%s.TE.fa"%str(args.fasta).split(".")[0],"w")
     out2 = open("%s.CON.fa"%str(args.fasta).split(".")[0],"w")
     seqslen = get_len(args.fasta)
@@ -71,7 +78,7 @@ def main():
     set2 = set(seqs.keys())
     for retain_ids in set2 - set1:
         try:
-            out2.write(">%s\t%s\n%s\n"%(retain_ids,pfam_ids[retain_ids],seqs.get(retain_ids)))
+            out2.write(">%s\t%s\n%s\n"%(retain_ids,"\t".join(pfam_ids[retain_ids]),seqs.get(retain_ids)))
         except KeyError:
             out2.write(">%s\tNon-domains\n%s\n"%(retain_ids,seqs.get(retain_ids)))
 
