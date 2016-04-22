@@ -32,10 +32,9 @@ def get_pc(blastfile, fastafile):
     tl = get_len(fastafile)
     for line in open(blastfile,"r"):
         qi = line.strip().split()[0]
-        ti = line.strip().split()[1]
         idv = float(line.strip().split()[2])
         al = float(line.strip().split()[3])
-        pc = (idv * al) / (tl.get(ti) * 100)
+        pc = (idv * al) / (tl.get(qi) * 100)
         try:
             tp[qi].append(pc)
         except KeyError:
