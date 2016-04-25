@@ -24,14 +24,14 @@ def split_xml(xml,num):
     while i <= y:
         if i < y:
             out = open("split/%s.xml"%i,"w")
-            out.write("split/%s"%ml[0].rstrip())
+            out.write("%s"%ml[0].rstrip())
             for x in range(int(num)*(i-1),int(num)*i):
                 out.write("\n<Iteration>\n%s"%ml[x+1].strip())
             out.write("\n</BlastOutput_iterations>\n")
             out.write("</BlastOutput>")
         elif i == y:
-            out = open("%s.xml"%i,"w")
-            out.write("test/%s\n"%ml[0].rstrip())
+            out = open("split/%s.xml"%i,"w")
+            out.write("%s\n"%ml[0].rstrip())
             for x in range(int(num)*(i - 1),len(ml) - 1):
                 out.write("\n<Iteration>\n%s\n"%ml[x+1].strip())
         i += 1
