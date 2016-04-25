@@ -7,6 +7,7 @@
 import os
 import argparse
 import os.path
+import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(usage="%(prog)s[options]")
@@ -38,6 +39,11 @@ def split_xml(xml,num):
 
 def main():
     argser = parse_args()
+    
+    if argser.xml == None or argser.num == None:
+        os.system("python %s -h"%sys.argv[0])
+        exit(1)
+        
     split_xml(argser.xml,int(argser.num))
 
 if __name__ == "__main__":
