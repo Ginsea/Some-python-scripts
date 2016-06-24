@@ -106,6 +106,8 @@ def main():
     cnci = pargs.cnci
     pfam = pargs.pfam
     fasta = pargs.fasta
+    
+    draw_venn(cpc,cnci,fasta,pfam)
 
     cpc_n = read_cpc(cpc)[1]
     cnci_n = read_cnci(cnci)[1]
