@@ -81,7 +81,7 @@ def read_pfam(pfam,fasta):
     for line in open(pfam):
         if line[0] != "#" and len(line) > 30:
             elements = line.strip().split()
-            ids = elements[0]
+            ids = elements[0][:elements[0].rfind(".")]
             if ids not in pfam_ids:
                 pfam_ids.append(ids)
 
