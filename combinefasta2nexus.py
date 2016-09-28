@@ -124,7 +124,6 @@ def getnex(path1,path2):
 	out.write("begin assumptions;\n")
 	i = 1
 	samp = tmpdir[tmpdir.keys()[1]]
-	print(sum([len(x) for x in samp]))
 	total = len(samp)
 	while i <= total:
 		if i == 1:
