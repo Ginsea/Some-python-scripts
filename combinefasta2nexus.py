@@ -23,7 +23,7 @@ def get_time():
 	return time.strftime('%H:%M:%S',time.localtime(time.time()))
 
 def recordcmd():
-	out = open("{0}/cmd.sh".format(rd),"w")
+	out = open("{0}/run_{1}.sh".format(rd,os.path.splitext(sys.argv[0])),"w")
 	out.write("python {0}".format(" ".join(sys.argv[:])))
 
 def arg_parse():
@@ -112,7 +112,7 @@ def getnex(path1,path2):
 	#ntax表示序列的数目
 	ntax = len([x for x in fastadir[fastadir.keys()[0]].keys()])
 	#ntchar表示每个序列中核苷酸的数目
-	nchar = sum(len(x) for x in tmpdir[tmpdir.keys()[random.randint(1,ntax-1)]])
+	nchar = sum([len(x) for x in tmpdir[tmpdir.keys()[random.randint(1,ntax-1)]]])
 	sys.stdout.write("[{0}] Write Information to Nexus File\n".format(get_time()))
 	out = open("{0}/connect.nexus".format(rd),"w")
 	out.write("#NEXUS\nBEGIN DATA;\n")
