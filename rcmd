@@ -48,7 +48,7 @@ def write2file(strs):
 		os.stat("{0}/{1}/{2}".format(folder,project,dates))
 	except OSError:
 		os.makedirs("{0}/{1}/{2}".format(folder,project,dates))
-	out = open("{0}/{1}/{2}/cmd_{3}.sh".format(folder,project,dates,ts),"w")
+	out = open("{0}/{1}/{2}/{4}cmd_{3}.sh".format(folder,project,dates,ts,strs.split()[0]),"w")
 	out.write("{0}".format(strs))
 	out.close()
 
