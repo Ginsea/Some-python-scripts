@@ -1,0 +1,64 @@
+#!/share/nas2/genome/bin/python
+#coding=UTF-8
+'''
+========================Usage=========================
+This script can be used to record your commands
+========================Author========================
+Ginsea Chen
+========================E-mail========================
+chenzx@biobreeding.com.cn
+======================================================
+'''
+import argparse
+import time
+import sys
+import os
+import re
+global folder
+folder = "/home/chenzx/workdir/command"
+global rd
+rd = os.getcwd()
+
+def get_day():
+	return time.strftime('%Y-%m-%d',time.localtime(time.time()))
+
+def get_time():
+	return time.strftime('%H:%M:%S',time.localtime(time.time()))
+
+def recordcmd():
+	out = open("{0}/cmd.sh".format(rd),"w")
+	out.write("python {0}".format(" ".join(sys.argv[:])))
+
+def get_project():
+	x = rd.strip().split("/")
+	print(x)
+	try:
+		location = x.index("project")
+	except ValueError:
+		location = -2
+	pro_location = location + 1
+	return x[pro_location]
+
+def write2file(strs):
+	sys.stdout.write("[{0}] {1}\n".format(get_time(),strs))
+	project = get_project()
+	dates = get_day()
+	ts = time.strftime("%H%M%S",time.localtime(time.time()))
+	try:
+		os.stat("{0}/{1}/{2}".format(folder,project,dates))
+	except OSError:
+		os.makedirs("{0}/{1}/{2}".format(folder,project,dates))
+	out = open("{0}/{1}/{2}/cmd_{3}.sh".format(folder,project,dates,ts),"w")
+	out.write("{0}".format(strs))
+	out.close()
+
+def main():
+	try:
+		strs = "".join(sys.argv[1:])
+	except IndexError:
+		exit("[{0}] Please add your command after this script!\n".format(get_time()))
+	write2file(strs)
+	sys.stdout.write("The file is stored in {0}/{1}/{2}\n".format(folder,get_project(),get_day()))
+
+if __name__ == "__main__":
+	main()
