@@ -148,11 +148,7 @@ def loci(ou1,ou2,com):
     comdir = load_com(com)
 
     for keys in comdir.keys():
- #       print(comdir[keys]["pac"])
- #       print(comdir[keys]["ann"].rstrip("-TA"))
         try:
-#            print(pacdir[keys]["query"])
-#            print(anndir[keys]["query"])
             if pacdir[keys]["query"] in comdir[keys]["pac"] and anndir[keys]["query"] in comdir[keys]["ann"]:
                 pacs = pacdir[keys]["score"]
                 anns = anndir[keys]["score"]
@@ -178,7 +174,7 @@ def loci(ou1,ou2,com):
                     out6.write("{0}\t{1}\t{2}\t{3}\n".format(keys,anndir[keys]["query"],pacdir[keys]["query"],pacs/anns))
                     L1S += 1
         except KeyError:
-            print(keys)
+            continue
 
     for keys in comdir.keys():
         try:
