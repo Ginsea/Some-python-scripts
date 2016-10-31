@@ -1,59 +1,64 @@
 #!/usr/bin/env python
-
+#coding=UTF-8
 '''
-This script can be used to split a large fasta to multiple files averagely
-Usgae python split_fasta_vaeragely.py --fasta fasta.fa --num [NUM]
+========================Usage=========================
+对较大的fasta文件按照一定序列数目进行分割
+========================Author========================
+Ginsea Chen
+========================E-mail========================
+chenzx@biobreeding.com.cn
+======================================================
 '''
-
-from Bio import SeqIO
 import argparse
+import time
+import sys
 import os
+import re
+from Bio import SeqIO
+global rd
+rd = os.getcwd()
 
-def parse_args():
-    parser = argparse.ArgumentParser(usage="%(prog)s[options]")
-    parser.add_argument("--fasta",default="fasta.fa",help="Your fasta file")
-    parser.add_argument("--num",default=100, type=int,help="number of seqs contained in each files")
-    return parser.parse_args()
+def ltime():
+	return time.strftime('%H:%M:%S',time.localtime(time.time()))
 
-def create_dir():
-    try:
-        os.stat("split")
-    except OSError:
-        os.mkdir("split")
+def arg_parse():
+    parse = argparse.ArgumentParser(usage="%(prog)s[options]")
+    parse.add_argument("--fasta",help="[FORCE] The input fasta file")
+    parse.add_argument("--num",default=1000,help="[OPTION] The sequence number of each file, The default is 1000")
+    parse.add_argument("--oudir",help="[FORCE] The output directory")
+    return parse.parse_args()
+def batch_iterator(iterator,batch_size):
+	entry = True
+	while entry:
+		batch = []
+		while len(batch) < batch_size:
+			try:
+				entry = iterator.next()
+			except StopIteration:
+				entry = None
+			if entry is None:
+				break
+			batch.append(entry)
+		if batch:
+			yield batch
 
 def main():
-    agrse = parse_args()
-    create_dir()
-    seqs_fa = dict()
-    for seqs in SeqIO.parse(agrse.fasta,"fasta"):
-        seqs_fa[str(seqs.id)] = str(seqs.seq)
-    i = len(seqs_fa)
-    seqs_id = seqs_fa.keys()
-    num = int(agrse.num)
-    nf = i / num
-    x = 1
-    
-    if i%num == 0:
-        while x <= nf:
-            out = open("split/%s_%d.fa"%(agrse.fasta.split(".")[0],x),"w")
-            if x < nf:
-                for y in range(num*(x - 1), num*x):
-                    out.write(">%s\n%s\n"%(seqs_id[y],seqs_fa.get(seqs_id[y])))
-            elif x == nf:
-                for y in range(num*(x - 1), num*x + 1):
-                    out.write(">%s\n%s\n"%(seqs_id[y],seqs_fa.get(seqs_id[y])))
-            x += 1
+	options = arg_parse()
+	if options.fasta == None or options.oudir == None:
+		os.system("python {0} -h".format(sys.argv[0]))
+		exit("[{0}] Error: incomplete options\n".format(ltime()))
 
-    elif i%num != 0:
-        while x <= nf + 1:
-            out = open("split/%s_%d.fa"%(agrse.fasta.split(".")[0],x),"w")
-            if x < nf + 1:
-                for y in range(num*(x - 1), num*x):
-                    out.write(">%s\n%s\n"%(seqs_id[y],seqs_fa.get(seqs_id[y])))
-            elif x == nf + 1:
-                for y in range(num*(x - 1),i):
-                    out.write(">%s\n%s\n"%(seqs_id[y],seqs_fa.get(seqs_id[y])))
-            x += 1
+	fasta = options.fasta
+	num = int(options.num)
+	oudir = options.oudir
+
+	record_iter = SeqIO.parse(open(fasta),"fasta")
+	for i, batch in enumerate(batch_iterator(record_iter, num)):
+		filename = "{0}/{1}_{2}.fasta".format(oudir,os.path.splitext(os.path.basename(fasta))[0],i+1)
+		handle = open(filename, "w")
+		count = SeqIO.write(batch, handle, "fasta")
+		handle.close()
+		sys.stdout.write("[{0}] Wrote {1} records to {2}\n".format(ltime(),count,filename))
 
 if __name__ == "__main__":
-    main()
+	main()
