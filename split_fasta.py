@@ -27,6 +27,7 @@ def arg_parse():
     parse.add_argument("--num",default=1000,help="[OPTION] The sequence number of each file, The default is 1000")
     parse.add_argument("--oudir",help="[FORCE] The output directory")
     return parse.parse_args()
+
 def batch_iterator(iterator,batch_size):
 	entry = True
 	while entry:
