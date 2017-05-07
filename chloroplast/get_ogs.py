@@ -16,7 +16,7 @@ def opt():
 	return args.parse_args()
 
 def acc2abb(inf):
-#	µÇÂ¼ºÅºÍÎïÖÖËõÐ´µÄ¶ÔÓ¦¹ØÏµ
+#	ï¿½ï¿½Â¼ï¿½Åºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Ä¶ï¿½Ó¦ï¿½ï¿½Ïµ
 	tmpdir = {}
 	for line in open(inf,"r"):
 		ele = line.strip().split()
@@ -24,7 +24,7 @@ def acc2abb(inf):
 	return tmpdir
 
 def test_dir(ind):
-#	´Ó×ÖµäÖÐ»ñÈ¡µ¥¿½±´»ùÒò
+#	ï¿½ï¿½ï¿½Öµï¿½ï¿½Ð»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	tmptup = []
 	nametup = [ind[k1] for k1 in ind.keys()]
 	for gn in set(nametup):
@@ -36,7 +36,7 @@ def test_dir(ind):
 
 def fadir(inf):
 	sidsp = re.compile(r"lcl\|([\w]+\.[0-9])")
-	gidsp = re.compile(r"_cds_([\w]+\.[0-9])_[0-9]")
+	gidsp = re.compile(r"_prot_([\w]+\.[0-9])_[0-9]")
 	gnamep = re.compile(r"\[gene=([\w]+)\]")
 	
 	tmpdir = {}
