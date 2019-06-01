@@ -9,6 +9,7 @@
 import os
 import argparse
 import sys
+import subprocess
 
 def parse_args():
     parser = argparse.ArgumentParser(usage="%(prog)s[options]")
@@ -39,12 +40,26 @@ def down_sra_file(sra,out,aspera):
         aspera_path = clean_aspera_path(aspera)
         if os.stat(out):
             if out[-1] == "/":
-                os.system("%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out))
+                s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out)
+                bash(cmd=s_cmd)
             elif out[-1] != "/":
-                os.system("%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s/"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out))
+                s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s/"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out)
+                bash(cmd=s_cmd)
         else:
             print "There were no folder which located on %s"%out
             exit(1)
+
+
+def bash(cmd):
+    b_stats = subprocess.Popen(cmd, shell=True)
+    b_stats.communicate()
+    if b_stats.returncode != 0:
+        print "Error:{cmd}".format(cmd=cmd)
+        return False
+    else:
+        print "Done:{cmd}".format(cmd=cmd)
+        return True
+
 
 def down_sra_screen(out,aspera):
     ids = raw_input("Enter a sra ids such as SRR**:\n")
@@ -53,9 +68,11 @@ def down_sra_screen(out,aspera):
     aspera_path = clean_aspera_path(aspera)
     if os.stat(out):
         if out[-1] == "/":
-            os.system("%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,ids.strip(),ids.strip(),out))
+            s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,ids.strip(),ids.strip(),out)
+            bash(cmd=s_cmd)
         elif out[-1] != "/":
-            os.system("%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s/"%(aspera_path,aspera_path,folder1,folder2,ids.strip(),ids.strip(),out))
+            s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s/"%(aspera_path,aspera_path,folder1,folder2,ids.strip(),ids.strip(),out)
+            bash(cmd=s_cmd)
     else:
         print "There were no folder which located on %s"%out
         exit(1)
@@ -66,9 +83,11 @@ def down_file_addre(addre,out,aspera):
     aspera_path = clean_aspera_path(aspera)
     if os.stat(out):
         if out[-1] == "/":
-            os.system("%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:%s %s"%(aspera_path,aspera_path,sub_addre,out))
+            s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:%s %s"%(aspera_path,aspera_path,sub_addre,out)
+            bash(cmd=s_cmd)
         elif out[-1] != "/":
-            os.system("%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:%s %s/"%(aspera_path,aspera_path,sub_addre,out))
+            s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:%s %s/"%(aspera_path,aspera_path,sub_addre,out)
+            bash(cmd=s_cmd)
     else:
         print "There were no folder which located on %s"%out
         exit(1)
