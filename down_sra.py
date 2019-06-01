@@ -35,6 +35,7 @@ def clean_aspera_path(aspera):
 
 def down_sra_file(sra,out,aspera):
     for line in open(sra,"r"):
+        print line.strip()
         folder1 = line[0:3]
         folder2 = line[0:6]
         aspera_path = clean_aspera_path(aspera)
