@@ -50,12 +50,21 @@ def down_sra_file(sra,out,aspera):
             exit(1)
 
 
-def bash(cmd):
+def bash(cmd, time=3):
     b_stats = subprocess.Popen(cmd, shell=True)
     b_stats.communicate()
+    itime = 0
     if b_stats.returncode != 0:
         print "Error:{cmd}".format(cmd=cmd)
-        return False
+        if itime <= time:
+            stats = bash(cmd=cmd)
+            if not stats:
+                itime += 1
+                return False
+            else:
+                return True
+        else:
+            return False
     else:
         print "Done:{cmd}".format(cmd=cmd)
         return True
