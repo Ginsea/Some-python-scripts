@@ -42,10 +42,10 @@ def down_sra_file(sra,out,aspera):
         aspera_path = clean_aspera_path(aspera)
         if os.stat(out):
             if out[-1] == "/":
-                s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out) if folder1 == "SRR" else "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/analysis/ByStudy/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out)
+                s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out) if folder1 == "SRR" else "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/analysis/BySample/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out)
                 bash(cmd=s_cmd)
             elif out[-1] != "/":
-                s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s/"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out) if folder1 == "SRR" else "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/analysis/ByStudy/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out)
+                s_cmd = "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/reads/ByRun/sra/%s/%s/%s/%s.sra %s/"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out) if folder1 == "SRR" else "%s/connect/bin/ascp -i %s/connect/etc/asperaweb_id_dsa.openssh -k 1 -QT -l 200m anonftp@ftp-trace.ncbi.nlm.nih.gov:/sra/sra-instant/analysis/BySample/%s/%s/%s/%s.sra %s"%(aspera_path,aspera_path,folder1,folder2,line.strip(),line.strip(),out)
                 bash(cmd=s_cmd)
         else:
             print "There were no folder which located on %s"%out
